@@ -3,10 +3,7 @@ package com.galvanize.tmo.paspringstarter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class LibraryController {
@@ -30,6 +27,12 @@ public class LibraryController {
     @GetMapping(value = "/api/books")
     public Map<String, List<Book>> getBooks () {
         Map<String, List<Book>> map = new HashMap<>();
+        Collections.sort(books, new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        });
         map.put("books", books);
 
         return map;
